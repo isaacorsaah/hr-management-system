@@ -1,5 +1,3 @@
-// session.js
-
 const session = require('express-session');
 
 // Middleware function to handle user sessions and authentication
