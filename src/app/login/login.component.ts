@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +11,15 @@ export class LoginComponent {
   email!: string;
   password!: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit() {
-    this.http.post('/api/login', { email: this.email, password: this.password })
-      .subscribe(response => {
-        // Handle successful login
-      }, error => {
-        // Handle login error
+    this.authService.login(this.email, this.password)
+      .subscribe((user: any) => {
+        console.log(user);
+        this.router.navigate([user.role + '-dashboard']);
+      }, (error: any) => {
+        console.log(error);
       });
   }
 }
