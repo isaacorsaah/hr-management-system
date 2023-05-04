@@ -1,35 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { AuthModule } from './services/auth.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-import { EmployeeDashboardComponent } from './components/employee-dashboard/employee-dashboard.component';
-import { AuthGuard } from './services/auth.guard';
 import { AppRoutingModule } from './app-routing.module';
-import { LogoutComponent } from './logout/logout.component';
-import { AuthService } from './services/auth.service';
+import { FormsModule } from '@angular/forms'; 
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth.module';
 import { HomeComponent } from './home/home.component';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    AdminDashboardComponent,
-    EmployeeDashboardComponent,
-    LogoutComponent,
-    HomeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
     FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
     AuthModule,
   ],
-  providers: [AuthGuard,AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

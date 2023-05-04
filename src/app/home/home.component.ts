@@ -13,14 +13,11 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    // Check if user is authenticated on component initialization
     this.isLoggedIn = this.authService.getLoggedInUser() !== null;
   }
 
   logout(): void {
-    // Call AuthService logout method to clear user authentication
     this.authService.logout();
-    // Redirect to the login page
     this.router.navigate(['/login']);
   }
 }
