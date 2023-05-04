@@ -4,7 +4,8 @@
   "description": "My Node.js project",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "ng serve"
   },
   "repository": {
     "type": "git",
