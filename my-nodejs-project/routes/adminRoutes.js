@@ -1,40 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const {check, validationResult} = require('express-validator');
-const auth = require('../utils/auth');
-const Admin = require('../models/admin');
-const Employee = require('../models/employee');
+const adminController = require('../controllers/admin.controller');
+const authMiddleware = require('../middlewares/auth.middleware');
 
-router.post(
-    '/login',
-    [
-        check('email').isEmail().normalizeEmail(),
-        check('password').notEmpty().trim(),
-    ],
-    async(req,res)=>{
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            return res.status(400).json({errors: errors.array()});
-        }
-        const {email, password} = req.body;
-        let user;
-        if(role === 'admin'){
-            user= await Admin.findOne({email});
-        }else if (role === 'employee'){
-            user = await Employee.findOne({email});
-        }
-        if(!user){
-            return res.status(401).json({message: 'Invalid credentials'});
-        }
+// Route to get all employees
+router.get('/employees', authMiddleware.verifyToken, adminController.getAllEmployees);
 
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        if(!passwordMatch){
-            return res.status(401).json({message: 'Invalid credentials'});
-        }
-        const token = jwt.sign({_id: user._id, role: user.role}, process.env.JWT_SECRET);
-        res.json({token});
-    }
-);
+// Route to create a new employee
+router.post('/employees', authMiddleware.verifyToken, adminController.createEmployee);
 
+// Route to update an existing employee
+router.put('/employees/:id', authMiddleware.verifyToken, adminController.updateEmployee);
+
+// Route to delete an employee
+router.delete('/employees/:id', authMiddleware.verifyToken, adminController.deleteEmployee);
+
+module.exports = router;
