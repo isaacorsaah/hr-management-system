@@ -8,5 +8,6 @@ router.get('/details', authMiddleware.verifyToken, employeeController.getEmploye
 
 // Route to update employee details
 router.put('/details', authMiddleware.verifyToken, employeeController.updateEmployeeDetails);
-
+router.post('/employees', employeeController.createEmployee);
+router.get('/employees', employeeController.getAllEmployees);
 module.exports = router;
