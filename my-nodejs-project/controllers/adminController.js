@@ -1,46 +1,22 @@
-const Admin = require('../models/admin');
-module.exports = {
-    async createAdmin(req,res){
-        try{
-            const {email, password, name} = req.body;
-            const admin = new Admin({email, password, name});
-            await admin.save();
-            res.status(201).json({message: 'Admin created successfully'});
-        }catch(error){
-            console.log(error);
-            res.status(500).json({message: 'Server error'});
-        }
-    },
-    async getAdmin(req,res){
-        try{
-            const admin = await Admin.findById(req.params.id);
-            res.json(admin);
-        }catch(error){
-            console.log(error);
-            res.status(500).json({message: 'Server error'});
-        }
-    },
-    async updateAdmin(req,res){
-        try{
-            const{email, password, name} = req.body;
-            const admin = await Admin.findByIdAndUpdate(
-                req.params.id,
-                {email, password, name},
-                {new:true}
-            );
-            res.json(admin);
-        }catch(error){
-            console.log(error);
-            res.status(500).json({message:'Server error'});
-        }
-    },
-    async deleteAdmin(req,res){
-        try{
-            await Admin.findByIdAndDelete(req.params.id);
-            res.json({message:'Admin deleted successfully'});
-        }catch(error){
-            console.log(error);
-            res.status(500).json({message:'Server error'});
-        }
-    },
+const Admin = require('../models/admin.model');
+const Employee = require('../models/employee.model');
+
+exports.createAdmin = (req, res) => {
+  const newAdmin = new Admin(req.body);
+  newAdmin.save((err, admin) => {
+    if (err) {
+      res.status(500).send({ message: 'An error occurred while creating the admin' });
+    } else {
+      res.status(200).send(admin);
+    }
+  });
+};
+exports.getAllAdmins = (req, res) => {
+  Admin.find({}, (err, admins) => {
+    if (err) {
+      res.status(500).send({ message: 'An error occurred while retrieving admins' });
+    } else {
+      res.status(200).send(admins);
+    }
+  });
 };

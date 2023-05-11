@@ -1,50 +1,21 @@
-const Employee = require('../models/employee');
+const Employee = require('../models/employee.model');
 
-module.exports = {
-  async createEmployee(req, res) {
-    try {
-      const { email, password, name } = req.body;
-      const employee = new Employee({ email, password, name });
-      await employee.save();
-      res.status(201).json({ message: 'Employee created successfully' });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: 'Server error' });
+exports.createEmployee = (req, res) => {
+  const newEmployee = new Employee(req.body);
+  newEmployee.save((err, employee) => {
+    if (err) {
+      res.status(500).send({ message: 'An error occurred while creating the employee' });
+    } else {
+      res.status(200).send(employee);
     }
-  },
-
-async getEmployee(req, res) {
-    try {
-      const employee = await Employee.findById(req.params.id);
-      res.json(employee);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: 'Server error' });
+  });
+};
+exports.getAllEmployees = (req, res) => {
+  Employee.find({}, (err, employees) => {
+    if (err) {
+      res.status(500).send({ message: 'An error occurred while retrieving employees' });
+    } else {
+      res.status(200).send(employees);
     }
-},
-
-async updateEmployee(req, res) {
-    try {
-      const { email, password, name } = req.body;
-      const employee = await Employee.findByIdAndUpdate(
-        req.params.id,
-        { email, password, name },
-        { new: true }
-      );
-      res.json(employee);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: 'Server error' });
-    }
-},
-
-  async deleteEmployee(req, res) {
-    try {
-      await Employee.findByIdAndDelete(req.params.id);
-      res.json({ message: 'Employee deleted successfully' });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: 'Server error' });
-    }
-  },
+  });
 };
