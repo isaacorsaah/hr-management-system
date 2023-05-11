@@ -1,5 +1,14 @@
 const Employee = require('../models/employee.model');
-
+const crypto = require('crypto');
+const generateSecretKey = () => {
+  try {
+    return crypto.randomBytes(64).toString('hex');
+  } catch (err) {
+    console.error(`An error occurred while generating secret key: ${err}`);
+    return null;
+  }
+};
+console.log(generateSecretKey());
 exports.createEmployee = (req, res) => {
   const newEmployee = new Employee(req.body);
   newEmployee.save((err, employee) => {
