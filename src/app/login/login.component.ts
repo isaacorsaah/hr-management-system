@@ -1,6 +1,8 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr'
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,38 +10,36 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email!: string;
-  password!: string;
+  constructor(private builder: FormBuilder, private toastr: ToastrService, private service: AuthService,
+    private router: Router) {
+      sessionStorage.clear();
 
-  @ViewChild('emailInput', {static: true}) emailInput: ElementRef | undefined;
-  @ViewChild('passwordInput', {static: true}) passwordInput: ElementRef | undefined;
-
-  constructor(private authService: AuthService, private router: Router) { 
-    this.emailInput = undefined;
-    this.passwordInput = undefined;
   }
+  result: any;
 
-  login(): void {
-    if (this.emailInput && this.passwordInput) {
-      this.email = this.emailInput.nativeElement.value;
-      this.password = this.passwordInput.nativeElement.value;
-      this.authService.login(this.email, this.password);
-    }
-  }
+  loginform = this.builder.group({
+    id: this.builder.control('', Validators.required),
+    password: this.builder.control('', Validators.required)
+  });
 
-  onSubmit() {
-    if (this.emailInput && this.passwordInput) {
-      this.authService.login(this.email, this.password)
-        .subscribe((user: any) => {
-          console.log(user);
-          if (user.role === 'admin') {
-            this.router.navigate(['/admin-dashboard']);
-          } else if (user.role === 'employee') {
-            this.router.navigate(['/employee-dashboard']);
+  proceedlogin() {
+    if (this.loginform.valid) {
+      this.service.GetUserbyCode(this.loginform.value.id).subscribe((item: any) => {
+        this.result = item;
+        if (this.result.password === this.loginform.value.password) {
+          if (this.result.isactive) {
+            sessionStorage.setItem('username',this.result.id);
+            sessionStorage.setItem('role',this.result.role);
+            this.router.navigate(['']);
+          } else {
+            this.toastr.error('Please contact Admin', 'InActive User');
           }
-        }, (error: any) => {
-          console.log(error);
-        });
+        } else {
+          this.toastr.error('Invalid credentials');
+        }
+      });
+    } else {
+      this.toastr.warning('Please enter valid data.')
     }
   }
 }
