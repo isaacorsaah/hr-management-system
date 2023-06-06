@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr'
+import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -9,37 +9,24 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  constructor(private builder: FormBuilder, private toastr: ToastrService, private service: AuthService,
-    private router: Router) {
-      sessionStorage.clear();
+export class LoginComponent implements OnInit {
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
-  }
-  result: any;
+  ngOnInit(): void { }
 
-  loginform = this.builder.group({
-    id: this.builder.control('', Validators.required),
-    password: this.builder.control('', Validators.required)
-  });
-
-  proceedlogin() {
-    if (this.loginform.valid) {
-      this.service.GetUserbyCode(this.loginform.value.id).subscribe((item: any) => {
-        this.result = item;
-        if (this.result.password === this.loginform.value.password) {
-          if (this.result.isactive) {
-            sessionStorage.setItem('username',this.result.id);
-            sessionStorage.setItem('role',this.result.role);
-            this.router.navigate(['']);
-          } else {
-            this.toastr.error('Please contact Admin', 'InActive User');
-          }
-        } else {
-          this.toastr.error('Invalid credentials');
-        }
-      });
-    } else {
-      this.toastr.warning('Please enter valid data.')
+  onSubmit(form: NgForm): void {
+    if (!form.valid) {
+      return;
     }
+    const { username, password } = form.value;
+    this.authService.login(username, password).subscribe(response => {
+      if (response.role === 'admin') {
+        this.router.navigate(['/admin']);
+      } else {
+        this.router.navigate(['/employee']);
+      }
+    }, error => {
+      console.error('Login failed', error);
+    });
   }
 }
