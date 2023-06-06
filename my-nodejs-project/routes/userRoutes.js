@@ -1,18 +1,40 @@
+// userRoutes.js
 const express = require('express');
 const router = express.Router();
-const adminController = require('../controllers/admin.controller');
-const authMiddleware = require('../middlewares/auth.middleware');
+const User = require('../models/UserModel');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+bcrypt.hash('admin1password', 10, function(err, hash) {
+    console.log(hash);
+});
+router.post('/register', async (req, res) => {
+    try {
+        const user = new User(req.body);
+        await user.save();
+        const token = await user.generateAuthToken();
+        res.status(201).send({user, token});
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
 
-// Route to get all employees
-router.get('/employees', authMiddleware.verifyToken, adminController.getAllEmployees);
-
-// Route to create a new employee
-router.post('/employees', authMiddleware.verifyToken, adminController.createEmployee);
-
-// Route to update an existing employee
-router.put('/employees/:id', authMiddleware.verifyToken, adminController.updateEmployee);
-
-// Route to delete an employee
-router.delete('/employees/:id', authMiddleware.verifyToken, adminController.deleteEmployee);
+router.post('/login', async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      const user = await User.findOne({ username });
+      if (!user) {
+        return res.status(400).json({ msg: 'Invalid Credentials' });
+      }
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ msg: 'Invalid Credentials' });
+      }
+      // Return user role on successful login
+      res.status(200).json({ role: user.role });
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ msg: 'Server error' });
+    }
+});
 
 module.exports = router;

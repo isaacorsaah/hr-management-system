@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "start": "ng serve"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
