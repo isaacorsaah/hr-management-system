@@ -1,33 +1,41 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-//import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedInUser: any = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http:HttpClient) { 
 
-  // login(email: string, password: string): Observable<any> {
-  //   return this.http.post('/api/login', { email, password }).pipe(
-  //     map((response: any) => {
-  //       this.loggedInUser = response.user;
-  //       return this.loggedInUser;
-  //     })
-  //   );
-  // }  
-  login(email: string, password: string): Observable<any> {
-    return this.http.post('/api/login', { email, password });
   }
+  apiurl='http://localhost:3000/user';
 
-  getLoggedInUser(): any {
-    return this.loggedInUser;
+  RegisterUser(inputdata:any){
+    return this.http.post(this.apiurl,inputdata)
   }
-
-  logout(): void {
-    this.loggedInUser = null;
+  GetUserbyCode(id:any){
+    return this.http.get(this.apiurl+'/'+id);
+  }
+  Getall(){
+    return this.http.get(this.apiurl);
+  }
+  updateuser(id:any,inputdata:any){
+    return this.http.put(this.apiurl+'/'+id,inputdata);
+  }
+  getuserrole(){
+    return this.http.get('http://localhost:3000/role');
+  }
+  isloggedin(){
+    return sessionStorage.getItem('username')!=null;
+  }
+  getrole(){
+    return sessionStorage.getItem('role')!=null?sessionStorage.getItem('role')?.toString():'';
+  }
+  GetAllCustomer(){
+    return this.http.get('http://localhost:3000/customer');
+  }
+  Getaccessbyrole(role:any,menu:any){
+    return this.http.get('http://localhost:3000/roleaccess?role='+role+'&menu='+menu)
   }
 }
