@@ -1,38 +1,44 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { ToastrService } from 'ngx-toastr'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;
 
-  constructor(private builder: FormBuilder, private service: AuthService, private router: Router,
-    private toastr: ToastrService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+    this.registerForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      role: ['employee', Validators.required]
+    });
+  }  
 
+  ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      role: ['Admin', Validators.required]
+    });
   }
 
-  registerform = this.builder.group({
-    id: this.builder.control('', Validators.compose([Validators.required, Validators.minLength(5)])),
-    name: this.builder.control('', Validators.required),
-    password: this.builder.control('', Validators.compose([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')])),
-    email: this.builder.control('', Validators.compose([Validators.required, Validators.email])),
-    gender: this.builder.control('male'),
-    role: this.builder.control(''),
-    isactive: this.builder.control(false)
-  });
-  proceedregister() {
-    if (this.registerform.valid) {
-      this.service.RegisterUser(this.registerform.value).subscribe(result => {
-        this.toastr.success('Please contact admin for enable access.','Registered successfully')
-        this.router.navigate(['login'])
-      });
-    } else {
-      this.toastr.warning('Please enter valid data.')
+  onSubmit(): void {
+    if (this.registerForm.invalid) {
+      return;
     }
+
+    const { email, username, password, role } = this.registerForm.value;
+    this.authService.register(email, username, password, role).subscribe((response: any) => {
+      // Handle the response here
+      console.log(response);
+    }, (error: any) => {
+      console.error('Registration failed', error);
+    });
   }
 }

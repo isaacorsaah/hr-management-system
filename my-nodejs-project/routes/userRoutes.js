@@ -1,22 +1,23 @@
 // userRoutes.js
 const express = require('express');
 const router = express.Router();
-const User = require('../models/UserModel');
+const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 bcrypt.hash('admin1password', 10, function(err, hash) {
     console.log(hash);
 });
 router.post('/register', async (req, res) => {
-    try {
-        const user = new User(req.body);
-        await user.save();
-        const token = await user.generateAuthToken();
-        res.status(201).send({user, token});
-    } catch (error) {
-        res.status(400).send(error);
-    }
+  try {
+      const user = new User(req.body);
+      await user.save();
+      const token = await user.generateAuthToken();
+      res.status(201).send({user, token});
+  } catch (error) {
+      res.status(400).send(error);
+  }
 });
+
 
 router.post('/login', async (req, res) => {
     try {

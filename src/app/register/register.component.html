@@ -1,34 +1,22 @@
-<mat-card>
-    <mat-card-header>
-        <h2>Registeration</h2>
-    </mat-card-header>
-    <mat-card-content>
-        <form class="example-form" [formGroup]="registerform" (ngSubmit)="proceedregister()">
-            <mat-form-field class="example-full-width">
-              <mat-label>Username</mat-label>
-              <matInput formControlName="id" >
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <mat-label>Name</mat-label>
-                <matInput formControlName="name" >
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <mat-label>Email</mat-label>
-                <matInput formControlName="email" >
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <mat-label>Password</mat-label>
-                <type="password" matInput formControlName="password" >
-            </mat-form-field>
-            
-            <mat-radio-group formControlName="gender" aria-label="Select an option">
-                <mat-radio-button value="male">Male</mat-radio-button>
-                <mat-radio-button value="female">Female</mat-radio-button>
-            </mat-radio-group>
-            <div>
-                <button mat-raised-button color="primary">Submit</button>
-                <a routerLink="/login" mat-raised-button color="accent">Back to Login</a>
-            </div>
-        </form>
-    </mat-card-content>
-</mat-card>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <label>
+      Email:
+      <input type="email" formControlName="email">
+    </label>
+    <label>
+      Username:
+      <input type="text" formControlName="username">
+    </label>
+    <label>
+      Password:
+      <input type="password" formControlName="password">
+    </label>
+    <label>
+      Role:
+      <select formControlName="role">
+        <option value="employee">Employee</option>
+        <option value="admin">Admin</option>
+      </select>
+    </label>
+    <button type="submit">Register</button>
+</form> 
