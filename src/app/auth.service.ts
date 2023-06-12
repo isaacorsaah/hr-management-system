@@ -8,13 +8,18 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   headers = new HttpHeaders({'Content-Type' : 'application/json'});
+  private postHeadedr = {headers: this.headers, withCredentials: true };
+  private getHeadedr = {withCredentials: true};
   constructor(private http: HttpClient) { }
 
-  register(username: string, password: string, role: string, email: string): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/register', { username, password, role, email }, { headers: this.headers });
+  public register(data: any): Observable<any> {
+    return this.http.post('http://localhost:3000/api/register', data, this.postHeadedr);
   }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/login', { username, password }, { headers: this.headers });
+  public login(username: string, password: string): Observable<any> {
+    return this.http.post('http://localhost:3000/api/login', { username, password }, this.postHeadedr);
+  }
+  public test():Observable<any>{
+    return this.http.get('http://localhost:3000/api/test', this.getHeadedr);
   }
 }
