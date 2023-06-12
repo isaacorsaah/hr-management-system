@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 bcrypt.hash('admin1password', 10, function(err, hash) {
     console.log(hash);
 });
-router.post('/register', async (req, res) => {
+router.post('/api/register', async (req, res) => {
   try {
       const user = new User(req.body);
       await user.save();
@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
 });
 
 
-router.post('/login', async (req, res) => {
+router.post('/api/login', async (req, res) => {
     try {
       const { username, password } = req.body;
       const user = await User.findOne({ username });
