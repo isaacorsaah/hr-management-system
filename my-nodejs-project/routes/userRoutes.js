@@ -38,4 +38,8 @@ router.post('/api/login', async (req, res) => {
     }
 });
 
+router.get('/test', async(req,res)=>{
+  res.status(200).json("Test Successful");
+})
+
 module.exports = router;
