@@ -30,11 +30,13 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registerForm.invalid) {
+      console.log("Invalid credentials");
       return;
     }
 
-    const { email, username, password, role } = this.registerForm.value;
-    this.authService.register(email, username, password, role).subscribe((response: any) => {
+    console.log(this.registerForm.value)
+    //const { email, username, password, role } = this.registerForm.value;
+    this.authService.register(this.registerForm.value).subscribe((response: any) => {
       // Handle the response here
       console.log(response);
     }, (error: any) => {
