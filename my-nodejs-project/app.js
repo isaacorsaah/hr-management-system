@@ -19,10 +19,13 @@ app.use(cors({
 }));
 
 app.use(express.json());
-//require('dotenv').config();
+require('dotenv').config();
 
 const jwtSecretKey = process.env.JWT_SECRET;
-mongoose.connect('MONGODB_URI_REMOVED', { useNewUrlParser: true, useUnifiedTopology: true })
+
+// Connection to MongoDB
+const connectionString = 'MONGODB_URI_REMOVED';
+mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
