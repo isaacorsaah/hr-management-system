@@ -19,13 +19,10 @@ app.use(cors({
 }));
 
 app.use(express.json());
-require('dotenv').config();
+//require('dotenv').config();
 
 const jwtSecretKey = process.env.JWT_SECRET;
-// mongoose.connect('mongodb://localhost/hr_management', { useNewUrlParser: true, useUnifiedTopology: true })
-//     .then(() => console.log('MongoDB Connected...'))
-//     .catch(err => console.log(err));
-mongoose.connect('mongodb://localhost:27017/hr-management-system', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://admin:admin@trydemonstrate.h3wfksj.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
