@@ -19,10 +19,13 @@ app.use(cors({
 }));
 
 app.use(express.json());
-//require('dotenv').config();
+require('dotenv').config();
 
 const jwtSecretKey = process.env.JWT_SECRET;
-mongoose.connect('mongodb+srv://admin:admin@trydemonstrate.h3wfksj.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
+
+// Connection to MongoDB
+const connectionString = 'mongodb+srv://hr-ms:isaac@cluster1.gfnogox.mongodb.net/';
+mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
