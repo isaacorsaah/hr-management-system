@@ -14,18 +14,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
-import { AuthService } from './auth.service';
-import { RegisterComponent } from './register/register.component'; 
+import { AuthService } from './auth.service'; 
 import { ReactiveFormsModule } from '@angular/forms';
-
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AdminDashboardComponent,
-    EmployeeDashboardComponent,
-    RegisterComponent
+    EmployeeDashboardComponent
   ],
   imports: [
     BrowserModule,

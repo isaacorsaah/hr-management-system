@@ -19,11 +19,11 @@ export class LoginComponent implements OnInit {
       return;
     }
     const { username, password } = form.value;
-    this.authService.login(username, password).subscribe(response => {
+    this.authService.login(username, password).subscribe((response: any) => {
       if (response.role === 'admin') {
-        this.router.navigate(['/admin']);
-      } else {
-        this.router.navigate(['/employee']);
+        this.router.navigate(['/admin-dashboard']);
+      } else if (response.role === 'employee') {
+        this.router.navigate(['/employee-dashboard']); 
       }
     }, error => {
       console.error('Login failed', error);
