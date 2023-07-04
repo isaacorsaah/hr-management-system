@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-    const { username, password } = form.value;
-    this.authService.login(username, password).subscribe((response: any) => {
+    const { email, password } = form.value;
+    this.authService.login(email, password).subscribe((response: any) => {
       if (response.role === 'admin') {
         this.router.navigate(['/admin-dashboard']);
       } else if (response.role === 'employee') {

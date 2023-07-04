@@ -9,9 +9,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string) {
+  login(email: string, password: string) {
     const body = {
-      username: username,
+      email: email,
       password: password
     };
 

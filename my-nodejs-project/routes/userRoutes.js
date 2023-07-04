@@ -7,8 +7,9 @@ const bcrypt = require('bcrypt');
 router.post('/login', async (req, res) => {
   console.log(req.body); 
   try {
-      const { username, password } = req.body;
-      const user = await User.findOne({ username });
+      const { email, password } = req.body;
+      const user = await User.findOne({ "email": email });
+      console.log(user)
       if (!user) {
           console.log('User not found'); 
           return res.status(400).json({ msg: 'Invalid Credentials' });
