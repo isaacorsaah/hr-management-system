@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes'); 
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -14,9 +15,13 @@ app.use((req, res, next) => {
 });
 // Use cors middleware
 app.use(cors({
-    origin: "http://localhost:4200", 
+    //origin: "http://localhost:4200", 
     credentials: true
 }));
+
+app.use(bodyParser.raw());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.json());
 require('dotenv').config();

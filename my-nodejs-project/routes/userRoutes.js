@@ -9,7 +9,6 @@ router.post('/login', async (req, res) => {
   try {
       const { email, password } = req.body;
       const user = await User.findOne({ "email": email });
-      console.log(user)
       if (!user) {
           console.log('User not found'); 
           return res.status(400).json({ msg: 'Invalid Credentials' });
@@ -29,14 +28,15 @@ router.post('/login', async (req, res) => {
 
 router.post('/createUser', async (req, res) => {
   try {
-    const { username, email, password, role } = req.body;
-    const existingUser = await User.findOne({ username });
+    console.log(req.body);
+    const {username, email, password, role } = req.body;
+    const existingUser = await User.findOne({ "email": email });
     if (existingUser) {
       return res.status(400).json({ msg: 'User already exists' });
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const user = new User({ username, email, password: hashedPassword, role });
+    const user = new User({username, email, password: hashedPassword, role });
     await user.save();
     res.status(200).json({ msg: 'User created successfully' });
   } catch (error) {
