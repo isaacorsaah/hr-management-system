@@ -25,13 +25,13 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-UserSchema.pre('save', async function(next) {
-    const user = this;
-    if(user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8);
-    }
-    next();
-});
+// UserSchema.pre('save', async function(next) {
+//     const user = this;
+//     if(user.isModified('password')) {
+//         user.password = await bcrypt.hash(user.password, 8);
+//     }
+//     next();
+// });
 UserSchema.methods.generateAuthToken = async function() {
     const user = this;
     const token = jwt.sign({_id: user._id, role: user.role}, jwtSecretKey);
