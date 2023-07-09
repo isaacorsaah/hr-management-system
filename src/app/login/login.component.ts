@@ -18,15 +18,19 @@ export class LoginComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-    const { email, password } = form.value;
-    this.authService.login(email, password).subscribe((response: any) => {
-      if (response.role === 'admin') {
-        this.router.navigate(['/admin-dashboard']);
-      } else if (response.role === 'employee') {
-        this.router.navigate(['/employee-dashboard']); 
-      }
-    }, error => {
-      console.error('Login failed', error);
-    });
+  const { email, password } = form.value;
+  this.authService.login(email, password).subscribe((response: any) => {
+    if (response.role === 'admin') {
+      this.router.navigate(['/admin'])
+        .then(() => console.log('Navigation to admin succeeded.'))
+        .catch((err) => console.error('Navigation to admin failed:', err));
+    } else if (response.role === 'employee') {
+      this.router.navigate(['/employee-dashboard'])
+        .then(() => console.log('Navigation to employee dashboard succeeded.'))
+        .catch((err) => console.error('Navigation to employee dashboard failed:', err));
+    }
+  }, error => {
+    console.error('Login failed', error);
+  });
   }
 }
