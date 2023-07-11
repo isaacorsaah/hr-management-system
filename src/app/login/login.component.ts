@@ -20,12 +20,12 @@ export class LoginComponent implements OnInit {
     }
   const { email, password } = form.value;
   this.authService.login(email, password).subscribe((response: any) => {
-    if (response.role === 'admin') {
+    if (response.role === 'Admin') {
       this.router.navigate(['/admin'])
         .then(() => console.log('Navigation to admin succeeded.'))
         .catch((err) => console.error('Navigation to admin failed:', err));
-    } else if (response.role === 'employee') {
-      this.router.navigate(['/employee-dashboard'])
+    } else if (response.role === 'Employee') {
+      this.router.navigate(['/employee'])
         .then(() => console.log('Navigation to employee dashboard succeeded.'))
         .catch((err) => console.error('Navigation to employee dashboard failed:', err));
     }
