@@ -1,73 +1,39 @@
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .logo img {
-    width: 150px;
-  }
-  
-  .search-bar input {
-    padding: 8px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 4px;
-    width: 200px;
-  }
-  
-  .login form {
-    display: flex;
-    align-items: center;
-  }
-  
-  .login input[type="text"],
-  .login input[type="password"] {
-    padding: 8px;
-    margin-right: 10px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 4px;
-    width: 150px;
-  }
-  
-  .login button {
-    padding: 8px 16px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  main {
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 4px;
-  }
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  section {
-    margin-bottom: 20px;
-  }
-  
-  h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  p {
-    font-size: 16px;
-    line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.logo {
+  height: 50px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+.main {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.footer {
+  background-color: #f5f5f5;
+  padding: 20px;
+  text-align: center;
 }
