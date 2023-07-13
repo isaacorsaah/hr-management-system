@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 // Use cors middleware
 app.use(cors({
-    origin: "http://localhost:4200", 
+    //origin: "http://localhost:4200", 
     credentials: true
 }));
 

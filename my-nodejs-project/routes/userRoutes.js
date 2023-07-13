@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
           console.log('Passwords do not match');
           return res.status(400).json({ msg: 'Invalid Credentials' });
       }
-      res.status(200).json({ role: user.role });
+      res.status(200).json({ role: user.role, email: user.email });
   } catch (error) {
       console.error(error.message);
       res.status(500).json({ msg: 'Server error' });

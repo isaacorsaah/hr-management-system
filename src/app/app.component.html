@@ -1,12 +1,18 @@
-<!-- app.component.html -->
 <div class="container">
   <header class="header">
     <img src="assets/mersus-logo.jpg" alt="Mersus Technology Logo" class="logo">
     <div class="nav-links">
-      <a href="/login" class="login-link">
+      <a href="/login" class="login-link" *ngIf="!authService.isLoggedIn()">
         <img src="assets/login-icon.png" alt="Login Icon" class="icon"> 
         Login
       </a>
+      <span *ngIf="authService.isLoggedIn()">
+        <span>{{ authService.getEmail() }}</span>
+        <a href="#" class="logout-link" (click)="authService.logout()">
+          
+          Logout
+        </a>
+      </span>
       <a href="/help" class="help-link">
         <img src="assets/help-icon.png" alt="Help Icon" class="icon">
         Help
@@ -15,12 +21,13 @@
   </header>
   
   <main class="main">
-    <h1>Welcome to MT Management System</h1>
-    <p>Your Human Resources companion!</p>
+    <h1 *ngIf="!authService.isLoggedIn()">Welcome to MT Management System</h1>
+    <p *ngIf="authService.isLoggedIn() && authService.getRole() === 'employee'">Welcome to the Employee Dashboard!</p>
+    <p *ngIf="authService.isLoggedIn() && authService.getRole() === 'admin'">Welcome to the Admin Dashboard!</p>
+    <router-outlet></router-outlet>
   </main>
   
   <footer class="footer">
     <p>© 2023 Mersus Technology. All rights reserved.</p>
   </footer>
 </div>
-<router-outlet></router-outlet>  
