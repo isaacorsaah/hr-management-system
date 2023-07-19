@@ -1,6 +1,9 @@
 <h1 mat-dialog-title>Add Employee</h1>
 <div mat-dialog-content>
   <mat-form-field>
+    <input matInput [(ngModel)]="employee.employeeId" placeholder="Employee ID">
+  </mat-form-field>
+  <mat-form-field>
     <input matInput [(ngModel)]="employee.username" placeholder="Username">
   </mat-form-field>
   <mat-form-field>

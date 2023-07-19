@@ -7,6 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddEmployeeDialogComponent {
   employee = {
+    employeeId: '',
     username: '',
     email: '',
     contact: '',
