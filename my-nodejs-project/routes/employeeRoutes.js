@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
       console.error(error.message);
       res.status(500).json({ msg: 'Server error' });
     }
-  });
+});
 
 router.post('/addEmployee', async (req, res) => {
     const newEmployee = new Employee(req.body);
@@ -22,20 +22,20 @@ router.post('/addEmployee', async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Error adding employee' });
     }
-  });
+});
 
 router.put('/editEmployee/:id', async (req, res) => {
     try {
-        const updatedEmployee = await Employee.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        if (!updatedEmployee) {
-            return res.status(404).json({ msg: 'Employee not found' });
-        }
-        res.status(200).json({ msg: 'Employee updated successfully', employee: updatedEmployee });
+      const updatedEmployee = await Employee.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!updatedEmployee) {
+        return res.status(404).json({ msg: 'Employee not found' });
+      }
+      res.status(200).json({ msg: 'Employee updated successfully', employee: updatedEmployee });
     } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ msg: 'Server error', error: error.message });
+      console.error(error.message);
+      res.status(500).json({ msg: 'Server error', error: error.message });
     }
-});
+  });  
 
 router.delete('/deleteEmployee/:id', async (req, res) => {
     try {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmployeeDialogComponent } from '../add-employee-dialog/add-employee-dialog.component';
 import { EmployeeService } from '../employee.service';
+import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -46,14 +47,22 @@ export class AdminDashboardComponent implements OnInit {
   }  
 
   editEmployee(employee: any) {
-    console.log(`Edit employee with ID: ${employee._id}`);
-    this.employeeService.editEmployee(employee._id, employee).subscribe(
-      response => {
-        console.log('Employee edited!', response);
-        this.getEmployees();
-      },
-      error => console.log('Error editing employee:', error)
-    );
+    console.log(employee._id);
+    const dialogRef = this.dialog.open(EditEmployeeDialogComponent, {
+      data: employee
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.employeeService.editEmployee(employee._id, result).subscribe(
+          response => {
+            console.log('Employee edited!', response);
+            this.getEmployees();
+          },
+          error => console.log('Error editing employee:', error)
+        );
+      }
+    });
   }
 
   deleteEmployee(id: string) {

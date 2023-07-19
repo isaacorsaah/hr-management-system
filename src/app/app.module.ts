@@ -17,6 +17,7 @@ import { AuthService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddEmployeeDialogComponent } from './add-employee-dialog/add-employee-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { EditEmployeeDialogComponent } from './edit-employee-dialog/edit-employee-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     LoginComponent,
     AdminDashboardComponent,
     EmployeeDashboardComponent,
-    AddEmployeeDialogComponent
+    AddEmployeeDialogComponent,
+    EditEmployeeDialogComponent
   ],
   imports: [
     BrowserModule,
