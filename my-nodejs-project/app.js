@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes'); 
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const employeeRoutes = require('./routes/employeeRoutes'); 
 const app = express();
 
 app.use((req, res, next) => {
@@ -22,7 +22,7 @@ app.use(cors({
 app.use(bodyParser.raw());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use('/api', employeeRoutes);
 app.use(express.json());
 require('dotenv').config();
 
