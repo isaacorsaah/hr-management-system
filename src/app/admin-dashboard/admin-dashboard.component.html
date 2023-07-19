@@ -35,7 +35,7 @@
                 <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
                 <mat-cell *matCellDef="let employee">
                     <button mat-button color="accent" (click)="editEmployee(employee)">Edit</button>
-                    <button mat-button color="warn" (click)="deleteEmployee(employee.id)">Delete</button>
+                    <button mat-button color="warn" (click)="deleteEmployee(employee)">Delete</button>
                 </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

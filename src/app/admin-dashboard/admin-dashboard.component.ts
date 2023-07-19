@@ -65,14 +65,16 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  deleteEmployee(id: string) {
-    console.log(`Delete employee with ID: ${id}`);
-    this.employeeService.deleteEmployee(id).subscribe(
+ 
+  deleteEmployee(employee: any) {
+    console.log(`Delete employee with ID: ${employee._id}`);
+    this.employeeService.deleteEmployee(employee._id).subscribe(
       response => {
         console.log('Employee deleted!', response);
-        this.getEmployees();
+        this.getEmployees(); // Refresh the employees list after deleting an employee
       },
       error => console.log('Error deleting employee:', error)
     );
   }
+  
 }
