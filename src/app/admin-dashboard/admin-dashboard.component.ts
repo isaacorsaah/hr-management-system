@@ -65,7 +65,6 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
- 
   deleteEmployee(employee: any) {
     console.log(`Delete employee with ID: ${employee._id}`);
     this.employeeService.deleteEmployee(employee._id).subscribe(
@@ -75,6 +74,5 @@ export class AdminDashboardComponent implements OnInit {
       },
       error => console.log('Error deleting employee:', error)
     );
-  }
-  
+  } 
 }
