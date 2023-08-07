@@ -12,7 +12,9 @@ export class EmployeeService {
 
   getEmployees() { return this.http.get(`${this.apiUrl}/getEmployees`); }
 
-  addEmployee(employee: any): Observable<any> { return this.http.post('http://localhost:3000/api/addEmployee', employee); }
+  addEmployee(employee: any, password: string): Observable<any> { 
+    const fullEmployeeData = {...employee, password};
+    return this.http.post(`${this.apiUrl}/addEmployee`, fullEmployeeData); }
 
   editEmployee(id: string, employeeData: any): Observable<any> { console.log(id); return this.http.put(`${this.apiUrl}/editEmployee/${id}`, employeeData); }
 

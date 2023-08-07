@@ -10,7 +10,7 @@ import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employ
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'username', 'email', 'contact', 'job', 'hours', 'absences', 'actions'];
+  displayedColumns: string[] = ['id', 'username', 'email', 'password', 'contact', 'job', 'hours', 'absences', 'actions'];
   employees: any[] = [];
 
   constructor(
@@ -35,7 +35,9 @@ export class AdminDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.employeeService.addEmployee(result).subscribe(
+        const password = result.password;
+        delete result.password;
+        this.employeeService.addEmployee(result,password).subscribe(
           response => {
             console.log('Employee added!', response);
             this.getEmployees();
@@ -70,7 +72,7 @@ export class AdminDashboardComponent implements OnInit {
     this.employeeService.deleteEmployee(employee._id).subscribe(
       response => {
         console.log('Employee deleted!', response);
-        this.getEmployees(); // Refresh the employees list after deleting an employee
+        this.getEmployees();
       },
       error => console.log('Error deleting employee:', error)
     );
