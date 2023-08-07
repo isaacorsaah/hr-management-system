@@ -10,6 +10,7 @@ export class AddEmployeeDialogComponent {
     employeeId: '',
     username: '',
     email: '',
+    password: '',
     contact: '',
     job: '',
     hours: '',

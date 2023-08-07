@@ -15,6 +15,10 @@
                 <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
                 <mat-cell *matCellDef="let employee">{{employee.email}}</mat-cell>
             </ng-container>
+            <ng-container matColumnDef="password">
+                <mat-header-cell *matHeaderCellDef>Password</mat-header-cell>
+                <mat-cell *matCellDef="let employee">{{employee.password}}</mat-cell>
+            </ng-container>
             <ng-container matColumnDef="contact">
                 <mat-header-cell *matHeaderCellDef>Contact Number</mat-header-cell>
                 <mat-cell *matCellDef="let employee">{{employee.contact}}</mat-cell>
