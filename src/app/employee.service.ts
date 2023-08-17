@@ -26,4 +26,16 @@ export class EmployeeService {
   getTimeOff(): Observable<any> { return this.http.get(`${this.apiUrl}/timeOff`); }
   getScheduledMeetings(): Observable<any> { return this.http.get(`${this.apiUrl}/scheduledMeetings`); }
   getTasks(): Observable<any> { return this.http.get(`${this.apiUrl}/tasks`); }
+  logTime(logDate: string, startTime: string, endTime: string): Observable<any> {
+    const data = {
+      logDate: logDate,
+      startTime: startTime,
+      endTime: endTime
+    };
+    return this.http.post(`${this.apiUrl}/logTime`, data);
+  }
+
+  applyForLeave(leaveData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/applyForLeave`, leaveData);
+  }
 }

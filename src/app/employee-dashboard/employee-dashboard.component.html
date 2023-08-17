@@ -3,47 +3,47 @@
   <p>Welcome, {{ employeeName }}!</p>
 
   <nav class="menu">
-      <ul>
-          <li><a href="#" (click)="navigate('time-management')">Time Management</a></li>
-          <li><a href="#" (click)="navigate('leave-management')">Leave Management</a></li>
-      </ul>
+    <ul>
+      <li><a href="#" (click)="navigate('time-management')">Time Management</a></li>
+      <li><a href="#" (click)="navigate('leave-management')">Leave Management</a></li>
+    </ul>
   </nav>
 
-  <div class="time-management">
-      <h2>Log Work Hours</h2>
-      <label>
-          Date:
-          <input type="date" [(ngModel)]="logDate">
-      </label>
-      <label>
-          Start Time:
-          <input type="time" [(ngModel)]="startTime">
-      </label>
-      <label>
-          End Time:
-          <input type="time" [(ngModel)]="endTime">
-      </label>
-      <button (click)="logTime()">Log Time</button>
+  <div *ngIf="currentView === 'time-management'" class="time-management">
+    <h2>Log Work Hours</h2>
+    <label>
+      Date:
+      <input type="date" [(ngModel)]="logDate">
+    </label>
+    <label>
+      Start Time:
+      <input type="time" [(ngModel)]="startTime">
+    </label>
+    <label>
+      End Time:
+      <input type="time" [(ngModel)]="endTime">
+    </label>
+    <button (click)="logTime()">Log Time</button>
   </div>
 
-  <div class="leave-management">
-      <h2>Apply for Leave</h2>
-      <label>
-          Start Date:
-          <input type="date" [(ngModel)]="leaveStart">
-      </label>
-      <label>
-          End Date:
-          <input type="date" [(ngModel)]="leaveEnd">
-      </label>
-      <label>
-          Reason:
-          <textarea [(ngModel)]="leaveReason"></textarea>
-      </label>
-      <button (click)="applyForLeave()">Apply</button>
+  <div *ngIf="currentView === 'leave-management'" class="leave-management">
+    <h2>Apply for Leave</h2>
+    <label>
+      Start Date:
+      <input type="date" [(ngModel)]="leaveStart">
+    </label>
+    <label>
+      End Date:
+      <input type="date" [(ngModel)]="leaveEnd">
+    </label>
+    <label>
+      Reason:
+      <textarea [(ngModel)]="leaveReason"></textarea>
+    </label>
+    <button (click)="applyForLeave()">Apply</button>
   </div>
 
   <footer>
-      © 2023 Mersus Technology. All rights reserved.
+    © 2023 Mersus Technology. All rights reserved.
   </footer>
 </div>
