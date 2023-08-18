@@ -94,4 +94,38 @@ router.post('/addEmployee', async (req, res) => {
   }
 });
 
+router.put('/logHours/:username', async (req, res) => {
+  try {
+      const { hours } = req.body;
+      const employee = await Employee.findOne({ username: req.params.username });
+      if(!employee) return res.status(404).json({ msg: 'Employee not found' });
+      
+      employee.workedHours += hours;
+      await employee.save();
+      
+      res.status(200).json({ msg: 'Hours logged successfully', workedHours: employee.workedHours });
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
+
+router.put('/requestLeave/:username', async (req, res) => {
+  try {
+      const { type, days } = req.body; // type can be 'vacationLeave', 'sickLeave', 'personalLeave'
+      const employee = await Employee.findOne({ username: req.params.username });
+      if(!employee) return res.status(404).json({ msg: 'Employee not found' });
+      
+      if(employee[type] < days) return res.status(400).json({ msg: 'Insufficient leave days' });
+      
+      employee[type] -= days;
+      await employee.save();
+      
+      res.status(200).json({ msg: 'Leave requested successfully', [type]: employee[type] });
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+});
+
 module.exports = router;
