@@ -112,7 +112,7 @@ router.put('/logHours/:username', async (req, res) => {
 
 router.put('/requestLeave/:username', async (req, res) => {
   try {
-      const { type, days } = req.body; // type can be 'vacationLeave', 'sickLeave', 'personalLeave'
+      const { type, days } = req.body;
       const employee = await Employee.findOne({ username: req.params.username });
       if(!employee) return res.status(404).json({ msg: 'Employee not found' });
       

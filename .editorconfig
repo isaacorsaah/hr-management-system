@@ -14,3 +14,4 @@ quote_type = single
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
+JWT_SECRET=eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY5MjM2NTMwOSwiaWF0IjoxNjkyMzY1MzA5fQ.R3sdmZxsYoYZ3V0p-ErwKx74ae3-7PQnjjPSTwEdQ2A

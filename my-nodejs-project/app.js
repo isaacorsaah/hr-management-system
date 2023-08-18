@@ -13,7 +13,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-// Use cors middleware
+
 app.use(cors({
     //origin: "http://localhost:4200", 
     credentials: true
