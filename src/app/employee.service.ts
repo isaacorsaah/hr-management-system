@@ -10,13 +10,14 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  getEmployees() { return this.http.get(`${this.apiUrl}/getEmployees`); }
   addEmployee(employee: any, password: string): Observable<any> {
     const fullEmployeeData = {...employee, password};
     return this.http.post(`${this.apiUrl}/addEmployee`, fullEmployeeData);
   }
+  getEmployees() { return this.http.get(`${this.apiUrl}/getEmployees`); }
   editEmployee(id: string, employeeData: any): Observable<any> { console.log(id); return this.http.put(`${this.apiUrl}/editEmployee/${id}`, employeeData); }
   deleteEmployee(id: string): Observable<any> { return this.http.delete(`${this.apiUrl}/deleteEmployee/${id}`); }
+ 
   getPreviousLoggedHours(): Observable<any> {
     return this.http.get(`${this.apiUrl}/previousLoggedHours`);
   }

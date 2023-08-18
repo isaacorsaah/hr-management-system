@@ -9,13 +9,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EmployeeDashboardComponent implements OnInit {
 
-  selectedDuration: string = 'day';
   hours: number = 0;
-  loggedInUser: string = '';  
+  loggedInUser!: string;
   vacationBalance: number = 0; 
   sickLeaveBalance: number = 0;
   personalLeaveBalance: number = 0;
-
   selectedLeaveType: string = 'vacation';
   leaveHours: number = 0;
   startTime: string = '';
@@ -24,35 +22,33 @@ export class EmployeeDashboardComponent implements OnInit {
   wantTimeOff: string = 'no';
   timeOffHours: number = 0;
 
-
-
   constructor(private http: HttpClient, private employeeService: EmployeeService) { }
 
+  fetchLoggedInEmployee() {
+    this.employeeService.getLoggedInEmployee().subscribe(data => {
+      console.log("Logged in user data:", data);
+      this.loggedInUser = data.username;
+  }, error => {
+      console.error('Error fetching logged in user:', error);
+  });
+  
+ }
+ 
+
   ngOnInit(): void {
-    this.fetchLoggedInUser();
-    this.fetchPreviousLoggedHours();
+    this.fetchPreviousLoggedHours();  this.fetchLoggedInEmployee();
   }
 
   fetchPreviousLoggedHours() {
     this.employeeService.getPreviousLoggedHours().subscribe(
       data => {
-        this.previousHours = data; // Adjust based on the structure of your response
+        this.previousHours = data;
       },
       error => {
         console.error("Error fetching previous logged hours:", error);
       }
     );
 }
-  fetchLoggedInUser() {
-    this.employeeService.getLoggedInEmployee().subscribe(
-      data => {
-        this.loggedInUser = data.username;
-      },
-      error => {
-        console.error("Error fetching the logged-in user's data:", error);
-      }
-    );
-  }
 
   requestTimeOff() {
     if (this.wantTimeOff === 'yes' && this.timeOffHours > 0) {
@@ -86,7 +82,7 @@ export class EmployeeDashboardComponent implements OnInit {
     this.employeeService.logTime(data).subscribe(
         response => {
             console.log('Hours logged successfully:', response);
-            this.hours = response.workedHours;  // Adjust based on the actual key in your response
+            this.hours = response.workedHours;
         },
         error => {
             console.error('Error logging hours:', error);
