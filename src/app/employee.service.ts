@@ -17,25 +17,24 @@ export class EmployeeService {
   }
   editEmployee(id: string, employeeData: any): Observable<any> { console.log(id); return this.http.put(`${this.apiUrl}/editEmployee/${id}`, employeeData); }
   deleteEmployee(id: string): Observable<any> { return this.http.delete(`${this.apiUrl}/deleteEmployee/${id}`); }
-  
+  getPreviousLoggedHours(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/previousLoggedHours`);
+  }
+   
 
   getLoggedInEmployee(): Observable<any> { return this.http.get(`${this.apiUrl}/loggedInEmployee`); }
-
-  getEmployeeInfo(): Observable<any> { return this.http.get(`${this.apiUrl}/employeeInfo`); }
-  getLogHours(): Observable<any> { return this.http.get(`${this.apiUrl}/logHours`); }
-  getTimeOff(): Observable<any> { return this.http.get(`${this.apiUrl}/timeOff`); }
-  getScheduledMeetings(): Observable<any> { return this.http.get(`${this.apiUrl}/scheduledMeetings`); }
-  getTasks(): Observable<any> { return this.http.get(`${this.apiUrl}/tasks`); }
-  logTime(logDate: string, startTime: string, endTime: string): Observable<any> {
-    const data = {
-      logDate: logDate,
-      startTime: startTime,
-      endTime: endTime
-    };
-    return this.http.post(`${this.apiUrl}/logTime`, data);
+  requestTimeOff(data: {wantsTimeOff: boolean, hours: number}): Observable<any> {
+    return this.http.post(`${this.apiUrl}/timeOff`, data);
   }
+  
 
-  applyForLeave(leaveData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/applyForLeave`, leaveData);
-  }
+ logTime(data: { logDate: string; startTime: string; endTime: string; }): Observable<any> {
+  return this.http.post(`${this.apiUrl}/logTime`, data);
+}
+
+
+applyForLeave(loggedInUser: string, leaveData: any): Observable<any> {
+  return this.http.put(`${this.apiUrl}/requestLeave/${loggedInUser}`, leaveData);
+}
+
 }

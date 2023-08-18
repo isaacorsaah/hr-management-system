@@ -11,6 +11,10 @@ const EmployeeSchema = new Schema({
     job: { type: String, required: true },
     hours: { type: Number, default: 0 },
     absences: { type: Number, default: 0 },
+    workedHours: { type: Number, default: 0 },
+    vacationLeave: { type: Number, default: 0 },
+    sickLeave: { type: Number, default: 0 },
+    personalLeave: { type: Number, default: 0 },
     employeeId: { type: Number, required: true},
 });
 

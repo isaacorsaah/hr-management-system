@@ -1,49 +1,65 @@
-<div class="dashboard">
-  <h1>Dashboard</h1>
-  <p>Welcome, {{ employeeName }}!</p>
+<mat-toolbar color="black">
+  Welcome, {{loggedInUser}}
+</mat-toolbar>
 
-  <nav class="menu">
-    <ul>
-      <li><a href="#" (click)="navigate('time-management')">Time Management</a></li>
-      <li><a href="#" (click)="navigate('leave-management')">Leave Management</a></li>
-    </ul>
-  </nav>
+<mat-tab-group>
+  <mat-tab label="Time Management">
+    <div>
+      <form (ngSubmit)="logHours()">
+        <div>
+          <label for="startTime">Start Time:</label>
+          <input type="time" id="startTime" [(ngModel)]="startTime" name="startTime">
+        </div>
+        <div>
+          <label for="endTime">End Time:</label>
+          <input type="time" id="endTime" [(ngModel)]="endTime" name="endTime">
+        </div>
+        <button type="submit">Log Hours</button>
+      </form>
+        <ul>
+        <li *ngFor="let log of previousHours">
+          {{ log.logDate }}: {{ log.startTime }} - {{ log.endTime }} ({{ log.hours }} hours)
+        </li>
+        </ul>
 
-  <div *ngIf="currentView === 'time-management'" class="time-management">
-    <h2>Log Work Hours</h2>
-    <label>
-      Date:
-      <input type="date" [(ngModel)]="logDate">
-    </label>
-    <label>
-      Start Time:
-      <input type="time" [(ngModel)]="startTime">
-    </label>
-    <label>
-      End Time:
-      <input type="time" [(ngModel)]="endTime">
-    </label>
-    <button (click)="logTime()">Log Time</button>
-  </div>
+      <h3>Request Time Off</h3>
+      <label>
+        Do you want to request time off? 
+        <input type="radio" name="timeOff" [(ngModel)]="wantTimeOff" value="yes"> Yes
+        <input type="radio" name="timeOff" [(ngModel)]="wantTimeOff" value="no"> No
+      </label>
+      
+      <div *ngIf="wantTimeOff === 'yes'">
+        <label>
+          Hours for time off: 
+          <input type="number" [(ngModel)]="timeOffHours" min="1">
+        </label>
+        <button (click)="requestTimeOff()">Submit Request</button>
+      </div>
+    </div>
+  </mat-tab>
 
-  <div *ngIf="currentView === 'leave-management'" class="leave-management">
-    <h2>Apply for Leave</h2>
-    <label>
-      Start Date:
-      <input type="date" [(ngModel)]="leaveStart">
-    </label>
-    <label>
-      End Date:
-      <input type="date" [(ngModel)]="leaveEnd">
-    </label>
-    <label>
-      Reason:
-      <textarea [(ngModel)]="leaveReason"></textarea>
-    </label>
-    <button (click)="applyForLeave()">Apply</button>
-  </div>
+  <!-- Leave Management Tab -->
+<mat-tab label="Leave Management">
+  <div>
+    <h3>Current Leave Balances</h3>
+      <p><strong>Vacation:</strong> {{vacationBalance}} hours</p>
+      <p><strong>Sick Leave:</strong> {{sickLeaveBalance}} hours</p>
+      <p><strong>Personal Leave:</strong> {{personalLeaveBalance}} hours</p>
 
-  <footer>
-    © 2023 Mersus Technology. All rights reserved.
-  </footer>
-</div>
+    <h3>Request Leave</h3>
+      <mat-form-field>
+        <mat-label>Select Leave Type</mat-label>
+        <mat-select [(ngModel)]="selectedLeaveType">
+          <mat-option value="vacation">Vacation</mat-option>
+          <mat-option value="sick">Sick Leave</mat-option>
+          <mat-option value="personal">Personal Leave</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="leaveHours" placeholder="Hours for Leave">
+      </mat-form-field>
+      <button mat-raised-button (click)="requestLeave()">Request Leave</button>
+    </div>
+  </mat-tab>
+</mat-tab-group>
